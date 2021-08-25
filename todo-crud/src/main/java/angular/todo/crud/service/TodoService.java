@@ -41,6 +41,15 @@ public class TodoService {
         return "Todo removed !! " + id;
     }
 
+    public void updateTodos(List<Todo> todos) {
+        for (int i = 0; i < todos.toArray().length; i++) {
+            Todo existingTodo = repository.findById(todos.get(i).getId()).orElse(null);
+            existingTodo.setContent(todos.get(i).getContent());
+            existingTodo.setIsCompleted(todos.get(i).getIsCompleted());
+            repository.save(existingTodo);
+        }
+    }
+
     public Todo updateTodo(Todo todo) {
         Todo existingTodo = repository.findById(todo.getId()).orElse(null);
         existingTodo.setContent(todo.getContent());

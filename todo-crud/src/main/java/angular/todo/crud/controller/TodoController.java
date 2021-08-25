@@ -52,6 +52,11 @@ public class TodoController {
         return service.getTodoByContent(Content);
     }
 
+    @PutMapping("/updateTodos")
+    public void updateTodos(@RequestBody List<Todo> todos) {
+        // update tbl_todo set content = <content> where id = <id>
+        service.updateTodos(todos);
+    }
 
     // Update
     @PutMapping("/updateTodo")

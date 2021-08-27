@@ -5,6 +5,7 @@ import angular.todo.crud.respository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,13 +42,16 @@ public class TodoService {
         return "Todo removed !! " + id;
     }
 
-    public void updateTodos(List<Todo> todos) {
+    public List<Todo> updateTodos(List<Todo> todos) {
+        List<Todo> result = new ArrayList<>();
         for (int i = 0; i < todos.toArray().length; i++) {
             Todo existingTodo = repository.findById(todos.get(i).getId()).orElse(null);
             existingTodo.setContent(todos.get(i).getContent());
-            existingTodo.setIsCompleted(todos.get(i).getIsCompleted());
-            repository.save(existingTodo);
+            existingTodo.setIsCompleted(todos.get(i).getIsCompleted() + existingTodo.getIsCompleted());
+            result.add(existingTodo);
         }
+        return repository.saveAll(result);
+
     }
 
     public Todo updateTodo(Todo todo) {
